@@ -1,12 +1,14 @@
-import { Menu, X, Globe, Users, LayoutDashboard } from "lucide-react";
+import { Menu, X, Globe, Users, LayoutDashboard, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import logoImage from "figma:asset/302c368583d57565a9330712da44b6dc43e6ad16.png";
 import { motion, AnimatePresence } from "motion/react";
 
+type Page = "home" | "community" | "dashboard" | "about";
+
 interface NavigationProps {
-  currentPage: "home" | "community" | "dashboard";
-  onNavigate: (page: "home" | "community" | "dashboard") => void;
+  currentPage: Page;
+  onNavigate: (page: Page) => void;
 }
 
 export function Navigation({ currentPage, onNavigate }: NavigationProps) {
@@ -16,6 +18,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { id: "home" as const, label: "Home", icon: Globe },
     { id: "community" as const, label: "Community", icon: Users },
     { id: "dashboard" as const, label: "Dashboard", icon: LayoutDashboard },
+    { id: "about" as const, label: "About", icon: Info },
   ];
 
   return (

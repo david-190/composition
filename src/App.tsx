@@ -3,28 +3,44 @@ import { Navigation } from "./components/Navigation";
 import { HomePage } from "./components/HomePage";
 import { CommunityPage } from "./components/CommunityPage";
 import { DashboardPage } from "./components/DashboardPage";
-import { motion, AnimatePresence } from "framer-motion";
+import { AboutPage } from "./components/AboutPage";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+
+type Page = "home" | "community" | "dashboard" | "about";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<"home" | "community" | "dashboard">("home");
+  const [currentPage, setCurrentPage] = useState<Page>("home");
 
-  const pageVariants = {
+  const pageVariants: Variants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 }
   };
 
   const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
+    type: "tween" as const,
+    ease: "anticipate" as const,
     duration: 0.5
   };
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+      <Navigation currentPage={currentPage} onNavigate={(page) => setCurrentPage(page as Page)} />
       
       <AnimatePresence mode="wait">
+        {currentPage === "about" && (
+          <motion.div
+            key="about"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+            className="pt-16"
+          >
+            <AboutPage />
+          </motion.div>
+        )}
         {currentPage === "home" && (
           <motion.div
             key="home"
